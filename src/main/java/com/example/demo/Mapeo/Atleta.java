@@ -3,6 +3,8 @@ package com.example.demo.Mapeo;
 import jakarta.persistence.*;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Min;
@@ -39,6 +41,7 @@ public class Atleta {
         joinColumns = @JoinColumn(name = "id_atleta"),
         inverseJoinColumns = @JoinColumn(name = "id_region")
     )
+    @JsonManagedReference  // Aquí aplicamos la anotación
     private Set<Region> regiones;
 
 

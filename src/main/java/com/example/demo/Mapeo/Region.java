@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Size;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Min;
@@ -15,7 +17,7 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "region")
 public class Region {
-   @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_region")
     private Integer id;
@@ -31,8 +33,8 @@ public class Region {
     private String nombreRegion;
 
     @ManyToMany(mappedBy = "regiones")
+    @JsonBackReference  // Aquí aplicamos la anotación
     private Set<Atleta> atletas;
-
     public Region() {
     }
 

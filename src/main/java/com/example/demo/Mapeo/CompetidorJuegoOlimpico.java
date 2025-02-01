@@ -12,7 +12,7 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "competidor_juego_olimpico")
 public class CompetidorJuegoOlimpico {
-   @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_competidores")
     private Integer id;
