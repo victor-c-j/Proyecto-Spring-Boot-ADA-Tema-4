@@ -1,19 +1,32 @@
 package com.example.demo.Mapeo;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+
 import java.util.Set;
+
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "region")
 public class Region {
-    @Id
+   @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_region")
     private Integer id;
 
+    @NotBlank(message = "El NOC no puede estar vacío")
+    @Size(min = 3, max = 3, message = "El NOC debe tener exactamente 3 caracteres")
     @Column(name = "noc", nullable = false, length = 3)
     private String noc;
 
+    @NotBlank(message = "El nombre de la región no puede estar vacío")
+    @Size(max = 100, message = "El nombre no puede tener más de 100 caracteres")
     @Column(name = "nombre_region", nullable = false, length = 100)
     private String nombreRegion;
 

@@ -3,6 +3,14 @@ package com.example.demo.Mapeo;
 import jakarta.persistence.*;
 import java.util.Set;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+
+
 @Entity
 @Table(name = "atleta")
 public class Atleta {
@@ -11,15 +19,20 @@ public class Atleta {
     @Column(name = "id_atleta")
     private Integer id;
 
+    @NotNull(message = "El género no puede ser nulo")
+    @Pattern(regexp = "M|F", message = "El género debe ser 'M' o 'F'")
     @Column(name = "genero", nullable = false)
     private char genero;
 
+    @NotNull(message = "La altura no puede ser nula")
+    @Min(value = 0, message = "La altura debe ser positiva")
     @Column(name = "altura", nullable = false)
-    private float altura;
+    private Float altura;
 
-    @Column(name = "nombre_completo", nullable = false, length = 100)
+    @NotBlank(message = "El nombre no puede estar vacío")
+    @Size(max = 100, message = "El nombre no puede tener más de 100 caracteres")
+    @Column(name = "nombre_completo", nullable = false)
     private String nombreCompleto;
-
     @ManyToMany
     @JoinTable(
         name = "atleta_region",
