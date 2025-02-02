@@ -1,4 +1,5 @@
 package com.example.demo.rest;
+
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,6 @@ import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @RestController
 @RequestMapping("/olimpiadas/atleta")
 public class AtletaController {
@@ -35,9 +35,11 @@ public class AtletaController {
         return atletaRepository.findAll();
     }
 
-    @PostMapping
+    @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> create(@Valid @RequestBody Atleta atleta) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(atletaRepository.save(atleta));
+        atleta.setId(null); // Asegurar que el ID sea null antes de guardar
+        Atleta nuevoAtleta = atletaRepository.save(atleta);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoAtleta);
     }
 
     @GetMapping("/{id}")

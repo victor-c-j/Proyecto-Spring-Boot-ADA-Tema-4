@@ -3,6 +3,8 @@ package com.example.demo.Mapeo;
 import jakarta.persistence.*;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.validation.constraints.NotNull;
@@ -11,13 +13,11 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-
-
 @Entity
 @Table(name = "atleta")
 public class Atleta {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Debe estar presente
     @Column(name = "id_atleta")
     private Integer id;
 
@@ -35,15 +35,11 @@ public class Atleta {
     @Size(max = 100, message = "El nombre no puede tener más de 100 caracteres")
     @Column(name = "nombre_completo", nullable = false)
     private String nombreCompleto;
-    @ManyToMany
-    @JoinTable(
-        name = "atleta_region",
-        joinColumns = @JoinColumn(name = "id_atleta"),
-        inverseJoinColumns = @JoinColumn(name = "id_region")
-    )
-    @JsonManagedReference  // Aquí aplicamos la anotación
-    private Set<Region> regiones;
 
+    @ManyToMany
+    @JoinTable(name = "atleta_region", joinColumns = @JoinColumn(name = "id_atleta"), inverseJoinColumns = @JoinColumn(name = "id_region"))
+    @JsonIgnoreProperties("atletas") // Ignora la lista de atletas en Region para evitar ciclos
+    private Set<Region> regiones;
 
     public Atleta() {
     }
@@ -99,12 +95,12 @@ public class Atleta {
     @Override
     public String toString() {
         return "{" +
-            " id='" + getId() + "'" +
-            ", genero='" + getGenero() + "'" +
-            ", altura='" + getAltura() + "'" +
-            ", nombreCompleto='" + getNombreCompleto() + "'" +
-            ", regiones='" + getRegiones() + "'" +
-            "}";
+                " id='" + getId() + "'" +
+                ", genero='" + getGenero() + "'" +
+                ", altura='" + getAltura() + "'" +
+                ", nombreCompleto='" + getNombreCompleto() + "'" +
+                ", regiones='" + getRegiones() + "'" +
+                "}";
     }
 
 }

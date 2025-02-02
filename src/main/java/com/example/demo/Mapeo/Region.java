@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -33,8 +34,9 @@ public class Region {
     private String nombreRegion;
 
     @ManyToMany(mappedBy = "regiones")
-    @JsonBackReference  // Aquí aplicamos la anotación
+    @JsonIgnoreProperties("regiones") // Ignora la lista de regiones en Atleta
     private Set<Atleta> atletas;
+
     public Region() {
     }
 
@@ -80,11 +82,11 @@ public class Region {
     @Override
     public String toString() {
         return "{" +
-            " id='" + getId() + "'" +
-            ", noc='" + getNoc() + "'" +
-            ", nombreRegion='" + getNombreRegion() + "'" +
-            ", atletas='" + getAtletas() + "'" +
-            "}";
+                " id='" + getId() + "'" +
+                ", noc='" + getNoc() + "'" +
+                ", nombreRegion='" + getNombreRegion() + "'" +
+                ", atletas='" + getAtletas() + "'" +
+                "}";
     }
 
 }
