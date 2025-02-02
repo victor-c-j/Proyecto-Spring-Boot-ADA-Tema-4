@@ -37,7 +37,10 @@ public class Atleta {
     private String nombreCompleto;
 
     @ManyToMany
-    @JoinTable(name = "atleta_region", joinColumns = @JoinColumn(name = "id_atleta"), inverseJoinColumns = @JoinColumn(name = "id_region"))
+    @JoinTable(name = "region_atleta", // Nombre de la tabla que ya has creado en la base de datos
+            joinColumns = @JoinColumn(name = "id_atleta"), // Columna que se refiere a la entidad Atleta
+            inverseJoinColumns = @JoinColumn(name = "id_region") // Columna que se refiere a la entidad Region
+    )
     @JsonIgnoreProperties("atletas") // Ignora la lista de atletas en Region para evitar ciclos
     private Set<Region> regiones;
 

@@ -33,9 +33,11 @@ public class CompetidorJuegoOlimpicoController {
         return competidorRepository.findAll();
     }
 
-    @PostMapping
+    @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> create(@Valid @RequestBody CompetidorJuegoOlimpico competidor) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(competidorRepository.save(competidor));
+        competidor.setId(null); // Asegurarse de que el ID sea null antes de guardar
+        CompetidorJuegoOlimpico nuevoCompetidor = competidorRepository.save(competidor);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoCompetidor);
     }
 
     @GetMapping("/{id}")
